@@ -13,6 +13,9 @@ const options = {
     },
     servers: [
       {
+        url: `https://node-lesson-pgx7.onrender.com`,
+      },
+      {
         url: `http://localhost:${PORT}`,
       },
     ],
