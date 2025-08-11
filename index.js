@@ -1,10 +1,11 @@
-import express from 'express';
-import mongoose from 'mongoose';
-import dotenv from 'dotenv';
-import cors from 'cors';
+import express from "express";
+import mongoose from "mongoose";
+import dotenv from "dotenv";
+import cors from "cors";
 
-import studentRoutes from './routes/Stundet_Routes.js';
-import { swaggerServe, swaggerSetup } from './swagger/swagger.js';
+import studentRoutes from "./routes/Stundet_Routes.js";
+import teacherRoutes from "./routes/Teacher_Router.js";
+import { swaggerServe, swaggerSetup } from "./swagger/swagger.js";
 
 dotenv.config();
 
@@ -16,20 +17,19 @@ app.use(cors());
 app.use(express.json());
 
 // Swagger documentation
-app.use('/api-docs', swaggerServe, swaggerSetup);
-
-
+app.use("/api-docs", swaggerServe, swaggerSetup);
 
 // Page
-app.get('/', (req, res) => {
-  res.send('Asosiy sahifa');
+app.get("/", (req, res) => {
+  res.send("Asosiy sahifa");
 });
-app.use('/api/students', studentRoutes);
+app.use("/api/students", studentRoutes);
+app.use("/api/teachers", teacherRoutes);
 
-mongoose.connect(process.env.MONGO_URI)
+mongoose
+  .connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB Atlasga ulandik!"))
-  .catch(err => console.error("MongoDB ulanishda xato:", err));
-
+  .catch((err) => console.error("MongoDB ulanishda xato:", err));
 
 app.listen(PORT, () => {
   console.log(`Server is running at http://localhost:${PORT}`);
